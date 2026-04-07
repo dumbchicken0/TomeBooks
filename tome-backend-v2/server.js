@@ -81,7 +81,7 @@ app.get('/api/books/:userId', async (req, res) => {
 
 app.put('/api/books/:id', async (req, res) => {
   try {
-    const book = await Book.findByIdAndUpdate(req.params.id, { status: req.body.status }, { returnDocument : 'after' });
+    const book = await Book.findByIdAndUpdate(req.params.id, { status: req.body.status }, { returnDocument: 'after' });
     res.json(book);
   } catch (err) { res.status(500).json(err); }
 });
@@ -113,7 +113,7 @@ app.post('/api/reviews', async (req, res) => {
 
 app.put('/api/reviews/:id', async (req, res) => {
   try {
-    const review = await Review.findByIdAndUpdate(req.params.id, { text: req.body.text, rating: req.body.rating }, { returnDocument : 'after' });
+    const review = await Review.findByIdAndUpdate(req.params.id, { text: req.body.text, rating: req.body.rating }, { returnDocument: 'after' });
     res.json(review);
   } catch (err) { res.status(500).json(err); }
 });
@@ -138,14 +138,14 @@ app.post('/api/shelves', async (req, res) => {
 
 app.post('/api/shelves/:id/add', async (req, res) => {
   try {
-    const shelf = await Shelf.findByIdAndUpdate(req.params.id, { $addToSet: { books: req.body.bookDbId } }, { returnDocument : 'after' }).populate('books');
+    const shelf = await Shelf.findByIdAndUpdate(req.params.id, { $addToSet: { books: req.body.bookDbId } }, { returnDocument: 'after' }).populate('books');
     res.json(shelf);
   } catch (err) { res.status(500).json(err); }
 });
 
 app.post('/api/shelves/:id/remove', async (req, res) => {
   try {
-    const shelf = await Shelf.findByIdAndUpdate(req.params.id, { $pull: { books: req.body.bookDbId } }, { returnDocument : 'after' }).populate('books');
+    const shelf = await Shelf.findByIdAndUpdate(req.params.id, { $pull: { books: req.body.bookDbId } }, { returnDocument: 'after' }).populate('books');
     res.json(shelf);
   } catch (err) { res.status(500).json(err); }
 });
@@ -158,12 +158,18 @@ app.delete('/api/shelves/:id', async (req, res) => {
 });
 
 // ==========================================
-// SERVER START
+// SERVER START & VERCEL EXPORT
 // ==========================================
-const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('✅ Connected to TomeBooks MongoDB');
-    app.listen(PORT, () => console.log(`🚀 Tome v2 Backend Running on port ${PORT}`));
-  })
+  .then(() => console.log('✅ Connected to TomeBooks MongoDB'))
   .catch(err => console.error(err));
+
+const PORT = process.env.PORT || 5000;
+
+// Only run app.listen if we are testing locally
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => console.log(`🚀 Tome v2 Backend Running on port ${PORT}`));
+}
+
+// Export the app for Vercel Serverless Functions
+export default app;
