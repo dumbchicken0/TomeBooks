@@ -24,6 +24,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         elements: {
           cardBox: "border-[3px] border-black rounded-[255px_15px_225px_15px/15px_225px_15px_255px] shadow-[8px_8px_0px_0px_rgba(236,72,153,1)] bg-white",
           card: "rounded-none shadow-none bg-transparent p-6",
+          modalContent: "border-[3px] border-black rounded-[255px_15px_225px_15px/15px_225px_15px_255px] shadow-[8px_8px_0px_0px_rgba(236,72,153,1)] bg-white",
+          modalBackdrop: "bg-pink-500/40 backdrop-blur-sm",
           headerTitle: "text-4xl font-bold text-black font-['Caveat']",
           headerSubtitle: "text-xl text-black font-['Caveat']",
           socialButtonsBlockButton: "border-[3px] border-black rounded-[15px_225px_15px_255px/255px_15px_225px_15px] hover:bg-pink-50 hover:-translate-y-1 transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] bg-white",
@@ -34,7 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           formFieldInput: "border-[3px] border-black rounded-[255px_15px_225px_15px/15px_225px_15px_255px] p-3 text-xl font-['Caveat'] focus:ring-0 focus:border-pink-500 focus:shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] transition-all bg-white",
           formButtonPrimary: "bg-black text-white hover:bg-pink-500 hover:text-black border-[3px] border-black rounded-[15px_225px_15px_255px/255px_15px_225px_15px] shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] hover:-translate-y-1 transition-all text-2xl font-bold py-3 mt-4 font-['Caveat']",
           footerActionText: "text-xl text-black font-['Caveat']",
-          footerActionLink: "text-pink-500 hover:text-black font-bold text-xl font-['Caveat']",
+          footerActionLink: "text-pink-500 hover:text-black font-bold text-xl font-['Caveat'] hover:underline",
           identityPreviewText: "text-black font-['Caveat']",
           identityPreviewEditButtonIcon: "text-black",
           formFieldInputShowPasswordButton: "text-black",
@@ -43,7 +45,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           userPreviewSecondaryIdentifier: "text-lg font-['Caveat'] text-gray-700",
           userButtonPopoverActionButton: "hover:bg-pink-50 rounded-[15px_255px_15px_225px/225px_15px_255px_15px] transition-colors",
           userButtonPopoverActionButtonText: "text-xl font-['Caveat'] text-black",
-          userButtonPopoverActionButtonIcon: "text-black"
+          userButtonPopoverActionButtonIcon: "text-black",
+          modalCloseButton: "text-black hover:text-pink-500 transition-colors"
         }
       }}
     >
