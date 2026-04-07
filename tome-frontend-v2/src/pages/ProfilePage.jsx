@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
     const fetchUserData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/books/${user.id}`);
+        const res = await axios.get(`https://tome-backend.vercel.app/api/books/${user.id}`);
         setBooks(res.data || []);
       } catch (err) {
         console.error("Failed to fetch user data:", err);
@@ -64,7 +64,7 @@ export default function ProfilePage() {
   return (
     <div className="max-w-5xl mx-auto px-6 md:px-10 py-16 bg-white min-h-screen font-['Caveat',_cursive]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');`}</style>
-      
+
       {/* Centered Profile Header */}
       <div className="flex flex-col items-center mb-16 text-center border-b-[3px] border-black pb-16">
         <div className="w-40 h-40 border-[3px] border-black bg-white overflow-hidden shadow-[8px_8px_0px_0px_rgba(236,72,153,1)] mb-8 rounded-[15px_225px_15px_255px/255px_15px_225px_15px]">
@@ -95,8 +95,8 @@ export default function ProfilePage() {
         <button
           onClick={() => handleTabClick('finished')}
           className={`flex items-center gap-2 px-6 py-4 border-[3px] text-2xl font-bold transition-all rounded-[15px_225px_15px_255px/255px_15px_225px_15px] ${activeTab === 'finished'
-              ? 'border-black bg-black text-white shadow-[6px_6px_0px_0px_rgba(236,72,153,1)] -translate-y-1'
-              : 'border-black bg-white text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+            ? 'border-black bg-black text-white shadow-[6px_6px_0px_0px_rgba(236,72,153,1)] -translate-y-1'
+            : 'border-black bg-white text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
             }`}
         >
           <Shield size={24} strokeWidth={3} /> Finished ({finishedBooks.length})
@@ -105,8 +105,8 @@ export default function ProfilePage() {
         <button
           onClick={() => handleTabClick('reading')}
           className={`flex items-center gap-2 px-6 py-4 border-[3px] text-2xl font-bold transition-all rounded-[255px_15px_225px_15px/15px_225px_15px_255px] ${activeTab === 'reading'
-              ? 'border-black bg-black text-white shadow-[6px_6px_0px_0px_rgba(236,72,153,1)] -translate-y-1'
-              : 'border-black bg-white text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+            ? 'border-black bg-black text-white shadow-[6px_6px_0px_0px_rgba(236,72,153,1)] -translate-y-1'
+            : 'border-black bg-white text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
             }`}
         >
           <BookOpen size={24} strokeWidth={3} /> Reading ({readingBooks.length})
@@ -115,8 +115,8 @@ export default function ProfilePage() {
         <button
           onClick={() => handleTabClick('toBeRead')}
           className={`flex items-center gap-2 px-6 py-4 border-[3px] text-2xl font-bold transition-all rounded-[15px_255px_15px_225px/225px_15px_255px_15px] ${activeTab === 'toBeRead'
-              ? 'border-black bg-black text-white shadow-[6px_6px_0px_0px_rgba(236,72,153,1)] -translate-y-1'
-              : 'border-black bg-white text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+            ? 'border-black bg-black text-white shadow-[6px_6px_0px_0px_rgba(236,72,153,1)] -translate-y-1'
+            : 'border-black bg-white text-black hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
             }`}
         >
           <Bookmark size={24} strokeWidth={3} /> To Be Read ({toBeReadBooks.length})

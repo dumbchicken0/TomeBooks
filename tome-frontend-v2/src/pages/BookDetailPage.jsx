@@ -52,7 +52,7 @@ export default function BookDetailPage() {
       // 1. ALWAYS CHECK MONGO DB FIRST (To catch Ghost Volumes)
       if (isSignedIn && user) {
         try {
-          const dbRes = await axios.get(`http://localhost:5000/api/books/${user.id}`);
+          const dbRes = await axios.get(`https://tome-backend.vercel.app/api/books/${user.id}`);
           const existingBook = dbRes.data.find(b => b.bookId === id);
           if (existingBook) {
             setDbBookId(existingBook._id);
@@ -107,7 +107,7 @@ export default function BookDetailPage() {
               }
             }
           `;
-          const hcRes = await axios.post('http://localhost:5000/api/hardcover', {
+          const hcRes = await axios.post('https://tome-backend.vercel.app/api/hardcover', {
             query: hcQuery
             // Removed the variables object so the backend proxy doesn't drop it
           });
@@ -128,7 +128,7 @@ export default function BookDetailPage() {
         setBook(parsedBook);
 
         // 3. FETCH REVIEWS
-        const reviewsRes = await axios.get(`http://localhost:5000/api/reviews/${id}`);
+        const reviewsRes = await axios.get(`https://tome-backend.vercel.app/api/reviews/${id}`);
         setTomeReviews(reviewsRes.data || []);
 
         if (isSignedIn && user) {
@@ -152,7 +152,7 @@ export default function BookDetailPage() {
 
   useEffect(() => {
     if (isShelfModalOpen && user) {
-      axios.get(`http://localhost:5000/api/shelves/${user.id}`)
+      axios.get(`https://tome-backend.vercel.app/api/shelves/${user.id}`)
         .then(res => setUserShelves(res.data))
         .catch(err => console.error(err));
     }
@@ -162,9 +162,9 @@ export default function BookDetailPage() {
     if (!isSignedIn) return;
     try {
       if (dbBookId) {
-        await axios.put(`http://localhost:5000/api/books/${dbBookId}`, { status: newStatus });
+        await axios.put(`https://tome-backend.vercel.app/api/books/${dbBookId}`, { status: newStatus });
       } else {
-        const res = await axios.post('http://localhost:5000/api/books', {
+        const res = await axios.post('https://tome-backend.vercel.app/api/books', {
           userId: user.id,
           bookId: id,
           title: book.title,
@@ -180,7 +180,7 @@ export default function BookDetailPage() {
 
   const handleRemoveFromLibrary = async () => {
     try {
-      await axios.delete(`http://localhost:5000/api/books/${dbBookId}`);
+      await axios.delete(`https://tome-backend.vercel.app/api/books/${dbBookId}`);
       setDbBookId(null);
       setCurrentStatus('');
       // If it's a ghost book, booting them back to profile
@@ -192,13 +192,13 @@ export default function BookDetailPage() {
     setIsSubmittingReview(true);
     try {
       if (isEditing && existingUserReview) {
-        const res = await axios.put(`http://localhost:5000/api/reviews/${existingUserReview._id}`, {
+        const res = await axios.put(`https://tome-backend.vercel.app/api/reviews/${existingUserReview._id}`, {
           text: reviewText, rating: userRating
         });
         setExistingUserReview(res.data);
         setTomeReviews(tomeReviews.map(r => r._id === res.data._id ? res.data : r));
       } else {
-        const res = await axios.post('http://localhost:5000/api/reviews', {
+        const res = await axios.post('https://tome-backend.vercel.app/api/reviews', {
           bookId: id,
           userId: user.id,
           userName: user.firstName || user.username || 'Reader',
@@ -454,9 +454,9 @@ export default function BookDetailPage() {
                           return;
                         }
                         const endpoint = hasBook ? 'remove' : 'add';
-                        await axios.post(`http://localhost:5000/api/shelves/${shelf._id}/${endpoint}`, { bookDbId: dbBookId });
+                        await axios.post(`https://tome-backend.vercel.app/api/shelves/${shelf._id}/${endpoint}`, { bookDbId: dbBookId });
                         // Refresh shelves
-                        const res = await axios.get(`http://localhost:5000/api/shelves/${user.id}`);
+                        const res = await axios.get(`https://tome-backend.vercel.app/api/shelves/${user.id}`);
                         setUserShelves(res.data);
                       }}
                       className={`flex items-center justify-between px-4 py-3 border-[3px] text-xl font-bold transition-colors rounded-[15px_225px_15px_255px/255px_15px_225px_15px] ${hasBook ? 'border-black bg-pink-500 text-white' : 'border-black hover:border-black hover:bg-pink-100 text-black'}`}
@@ -478,9 +478,9 @@ export default function BookDetailPage() {
               <button
                 onClick={async () => {
                   if (!newShelfName.trim()) return;
-                  await axios.post('http://localhost:5000/api/shelves', { userId: user.id, name: newShelfName });
+                  await axios.post('https://tome-backend.vercel.app/api/shelves', { userId: user.id, name: newShelfName });
                   setNewShelfName('');
-                  const res = await axios.get(`http://localhost:5000/api/shelves/${user.id}`);
+                  const res = await axios.get(`https://tome-backend.vercel.app/api/shelves/${user.id}`);
                   setUserShelves(res.data);
                 }}
                 className="bg-white border-[3px] border-black text-black px-6 py-2 text-2xl font-bold hover:bg-pink-500 transition-colors rounded-[15px_225px_15px_255px/255px_15px_225px_15px]"

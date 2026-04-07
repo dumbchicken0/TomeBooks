@@ -20,10 +20,10 @@ export default function DiscoverPage() {
 
       try {
         const [trendRes, rateRes, devourRes, epicRes] = await Promise.all([
-          axios.post('http://localhost:5000/api/hardcover', { query: trendingQuery }),
-          axios.post('http://localhost:5000/api/hardcover', { query: ratedQuery }),
-          axios.post('http://localhost:5000/api/hardcover', { query: devouredQuery }),
-          axios.post('http://localhost:5000/api/hardcover', { query: epicQuery })
+          axios.post('https://tome-backend.vercel.app/api/hardcover', { query: trendingQuery }),
+          axios.post('https://tome-backend.vercel.app/api/hardcover', { query: ratedQuery }),
+          axios.post('https://tome-backend.vercel.app/api/hardcover', { query: devouredQuery }),
+          axios.post('https://tome-backend.vercel.app/api/hardcover', { query: epicQuery })
         ]);
 
         // FIXED: Removed the extra .data typo here!

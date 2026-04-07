@@ -12,20 +12,20 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn) { 
-      setIsLoading(false); 
-      return; 
+    if (!isLoaded || !isSignedIn) {
+      setIsLoading(false);
+      return;
     }
-    
-    axios.get(`http://localhost:5000/api/books/${user.id}`)
+
+    axios.get(`https://tome-backend.vercel.app/api/books/${user.id}`)
       .then(r => setBooks(r.data))
       .catch(() => console.error("Failed to load library"))
       .finally(() => setIsLoading(false));
   }, [user, isSignedIn, isLoaded]);
 
   const currentlyReading = books.filter(b => b.status === 'currently_reading');
-  const wantToRead       = books.filter(b => b.status === 'want_to_read');
-  const recentlyFinished = books.filter(b => b.status === 'read').slice(0, 10); 
+  const wantToRead = books.filter(b => b.status === 'want_to_read');
+  const recentlyFinished = books.filter(b => b.status === 'read').slice(0, 10);
 
   if (isLoading) return <div className="flex justify-center items-center h-screen text-pink-500 bg-white"><Loader2 size={64} className="animate-spin" /></div>;
 
@@ -36,10 +36,10 @@ export default function HomePage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[80vh] px-6 md:px-10 text-center font-['Caveat',_cursive]">
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');`}</style>
-        <img 
-          src="/logo.svg" 
-          alt="TomeBooks" 
-          className="h-32 md:h-48 object-contain mb-8 drop-shadow-[8px_8px_0px_rgba(236,72,153,1)] hover:-translate-y-2 transition-transform duration-300" 
+        <img
+          src="/logo.svg"
+          alt="TomeBooks"
+          className="h-32 md:h-48 object-contain mb-8 drop-shadow-[8px_8px_0px_rgba(236,72,153,1)] hover:-translate-y-2 transition-transform duration-300"
         />
         <p className="text-3xl font-bold text-black border-[3px] border-black bg-white p-6 max-w-md leading-relaxed rounded-[255px_15px_225px_15px/15px_225px_15px_255px] shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
           The architectural archive for your literary journey. Sign in to access your dashboard.
@@ -61,7 +61,7 @@ export default function HomePage() {
           <p className="text-3xl font-semibold text-black mb-10 max-w-md leading-relaxed">
             You haven't tracked any volumes yet. Head over to the Discover page to explore the global zeitgeist and start building your library.
           </p>
-          <button 
+          <button
             onClick={() => navigate('/discover')}
             className="bg-black text-white px-8 py-4 text-3xl font-bold border-[3px] border-black rounded-[15px_225px_15px_255px/255px_15px_225px_15px] hover:bg-pink-500 hover:text-black transition-colors flex items-center gap-3 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
           >
@@ -94,7 +94,7 @@ export default function HomePage() {
   return (
     <div className="max-w-[100vw] py-12 overflow-x-hidden bg-white min-h-screen font-['Caveat',_cursive]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');`}</style>
-      
+
       {/* Page Header */}
       <div className="px-6 md:px-10 mb-12 flex justify-between items-end border-b-[3px] border-black pb-8 rounded-b-[255px_15px_225px_15px/15px_225px_15px_255px]">
         <div>
@@ -107,15 +107,15 @@ export default function HomePage() {
       {activeBook && (
         <div className="px-6 md:px-10 mb-12">
           <SectionHeader title="Active Focus" icon={Play} subtitle="Continue Reading" />
-          
+
           <div className="border-[3px] border-black flex flex-col md:flex-row bg-white shadow-[8px_8px_0px_0px_rgba(236,72,153,1)] hover:shadow-[12px_12px_0px_0px_rgba(236,72,153,1)] transition-shadow duration-300 cursor-pointer group rounded-[255px_15px_225px_15px/15px_225px_15px_255px]"
-               onClick={() => navigate(`/book/${activeBook.bookId}`)}>
-            
+            onClick={() => navigate(`/book/${activeBook.bookId}`)}>
+
             <div className="w-full md:w-48 aspect-[2/3] md:aspect-auto md:h-64 border-b-[3px] md:border-b-0 md:border-r-[3px] border-black overflow-hidden relative bg-white shrink-0 rounded-[15px_225px_15px_255px/255px_15px_225px_15px]">
               {activeBook.coverUrl ? (
                 <img src={activeBook.coverUrl} alt={activeBook.title} className="w-full h-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500" />
               ) : (
-                 <div className="absolute inset-0 flex items-center justify-center text-black font-bold text-3xl">No Cover</div>
+                <div className="absolute inset-0 flex items-center justify-center text-black font-bold text-3xl">No Cover</div>
               )}
             </div>
 
@@ -147,7 +147,7 @@ export default function HomePage() {
       {/* Up Next Queue */}
       {wantToRead.length > 0 && (
         <div className="px-6 md:px-10 mb-20">
-          <SectionHeader title="Up Next" icon={BookmarkCheck} count={wantToRead.length} subtitle={ `${wantToRead.length} Volumes in Queue` } />
+          <SectionHeader title="Up Next" icon={BookmarkCheck} count={wantToRead.length} subtitle={`${wantToRead.length} Volumes in Queue`} />
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 md:gap-8">
             {wantToRead.map(book => (
               <BookCard key={book._id} id={book.bookId} title={book.title} author={book.author} coverUrl={book.coverUrl} />

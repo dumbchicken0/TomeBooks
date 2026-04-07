@@ -26,7 +26,7 @@ export default function ShelvesPage() {
 
     const fetchShelves = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/shelves/${user.id}`);
+        const res = await axios.get(`https://tome-backend.vercel.app/api/shelves/${user.id}`);
         setShelves(res.data);
         if (res.data.length > 0) setActiveShelf(res.data[0]);
       } catch (err) {
@@ -51,7 +51,7 @@ export default function ShelvesPage() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/api/shelves', {
+      const res = await axios.post('https://tome-backend.vercel.app/api/shelves', {
         userId: user.id,
         name: newShelfName
       });
@@ -70,7 +70,7 @@ export default function ShelvesPage() {
     if (!window.confirm(`Are you sure you want to delete the "${activeShelf.name}" archive? This cannot be undone.`)) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/shelves/${activeShelf._id}`);
+      await axios.delete(`https://tome-backend.vercel.app/api/shelves/${activeShelf._id}`);
 
       // Update the UI immediately without reloading
       const updatedShelves = shelves.filter(s => s._id !== activeShelf._id);
@@ -94,7 +94,7 @@ export default function ShelvesPage() {
   return (
     <div className="max-w-[100vw] py-12 overflow-x-hidden bg-white min-h-screen flex flex-col font-['Caveat',_cursive]">
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');`}</style>
-      
+
       {/* Header with Tagline */}
       <div className="px-6 md:px-10 mb-12 flex justify-between items-end border-b-[3px] border-black pb-8 rounded-b-[255px_15px_225px_15px/15px_225px_15px_255px]">
         <div>
@@ -121,8 +121,8 @@ export default function ShelvesPage() {
                 key={shelf._id}
                 onClick={() => setActiveShelf(shelf)}
                 className={`flex items-center justify-between p-5 border-[3px] transition-all text-left group hover:-translate-y-1 rounded-[15px_225px_15px_255px/255px_15px_225px_15px] ${activeShelf?._id === shelf._id
-                    ? 'border-black bg-black text-white shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] translate-x-2 z-10'
-                    : 'border-transparent hover:border-black bg-white text-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
+                  ? 'border-black bg-black text-white shadow-[4px_4px_0px_0px_rgba(236,72,153,1)] translate-x-2 z-10'
+                  : 'border-transparent hover:border-black bg-white text-black hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]'
                   }`}
               >
                 <div className="flex items-center gap-3">
